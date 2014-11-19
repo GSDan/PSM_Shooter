@@ -1,0 +1,126 @@
+fileFormatVersion: 2
+guid: 402356df22e1a964f867f6d3160ad72f
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: atlas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 464
+        width: 80
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 415
+        width: 80
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 371
+        width: 80
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 311
+        width: 79
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 79
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 209
+        width: 79
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_6
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 161
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 106
+        width: 79
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: atlas_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 54
+        width: 79
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+  spritePackingTag: 
+  userData: 
