@@ -1,0 +1,30 @@
+{
+	"title" : "Test Level Go!!",
+	"scrollSpeed" : 100,
+	"events" : [
+		{
+			"time" : 3.1,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},
+		{
+			"time" : 1.0,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},		
+		{
+			"time" : 3.2,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 3.3,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		}
+	]
+}

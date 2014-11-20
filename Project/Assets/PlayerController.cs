@@ -3,23 +3,12 @@ using System.Collections;
 
 public class PlayerController : ShipController {
 
-	int fireAngle = 0;
-
 	// Use this for initialization
 	protected override void Start ()
 	{
 		base.Start ();
 	}
-
-	void OnGUI()
-	{
-		/*int rightStickOffset_X = 350;
-		int rightStickOffset_Y = 40;
-		
-		GUI.TextField(new Rect(rightStickOffset_X, rightStickOffset_Y, 200, 20), " Right Stick X Axis: " + Input.GetAxis("Right Stick Horizontal"));
-		GUI.TextField(new Rect(rightStickOffset_X, rightStickOffset_Y + 25, 200, 20), " Fire angle: " + fireAngle); */
-	}
-
+	
 	// Update is called once per frame
 	protected override void Update ()
 	{
