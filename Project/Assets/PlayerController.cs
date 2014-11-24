@@ -3,16 +3,42 @@ using System.Collections;
 
 public class PlayerController : ShipController {
 
+	public GameManager gameManager;
+
+	private bool isAlive = true;
+	private Vector3 originalPos;
+
+	public void Reset()
+	{
+		transform.localRotation = new Quaternion (0, 0, 0, 0);
+		transform.localPosition = originalPos;
+		currentHealth = maxHealth;
+		isAlive = true;
+	}
+
 	// Use this for initialization
 	protected override void Start ()
 	{
+		originalPos = transform.localPosition;
 		base.Start ();
 	}
 	
 	// Update is called once per frame
 	protected override void Update ()
 	{
-		base.Update ();
+		if(currentHealth <= 0)
+		{
+			if(isAlive)
+			{
+				gameManager.GameOver();
+				isAlive = false;
+			}
+			return;
+		}
+		else
+		{
+			base.Update ();
+		}
 
 		// Ship movement up
 		if((Input.GetButton("Dup") || Input.GetAxis("Left Stick Vertical") < 0 || Input.GetKey(KeyCode.W)) && (transform.localPosition.y < 161))
@@ -47,7 +73,6 @@ public class PlayerController : ShipController {
 				shoot(new Vector2(-shotVelocity, Input.GetAxis ("Right Stick Vertical") * -2));
 			}
 		}
-
 	}
 
 	protected override Shot shoot(Vector2 direction)

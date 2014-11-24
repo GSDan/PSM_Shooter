@@ -191,6 +191,9 @@
      <Compile Include="Assets\NGUI\scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\scripts\UI\UIViewport.cs" />
      <Compile Include="Assets\PlayerController.cs" />
+     <Compile Include="Assets\RepeatingSprite.cs" />
+     <Compile Include="Assets\SceneManager.cs" />
+     <Compile Include="Assets\SceneryManager.cs" />
      <Compile Include="Assets\ShipController.cs" />
      <Compile Include="Assets\Shot.cs" />
      <Compile Include="Assets\_Code\ABundlesExample.cs" />

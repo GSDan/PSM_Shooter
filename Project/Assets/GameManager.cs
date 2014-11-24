@@ -5,6 +5,9 @@ public class GameManager : MonoBehaviour {
 
 	public UILabel scoreLabel;
 	public EnemySpawner spawner;
+	public SceneManager sceneManager;
+	public SceneryManager scenery;
+	public PlayerController player;
 
 	int score = 0;
 
@@ -14,6 +17,32 @@ public class GameManager : MonoBehaviour {
 		scoreLabel.text = score.ToString ();
 	}
 
+	public void GameOver()
+	{
+		scenery.isMoving = false;
+		spawner.shouldSpawn = false;
+		sceneManager.showGameOver ();
+	}
+
+	public void LevelComplete()
+	{
+		spawner.Reset ();
+		this.Start (); // TODO load next level
+	}
+
+	public void Restart()
+	{
+		score = 0;
+		scoreLabel.text = "0";
+
+		spawner.Reset ();
+		player.Reset ();
+
+		sceneManager.showGameplay ();
+
+		this.Start ();
+	}
+
 	void Start()
 	{
 		LevelData thisLevel = LevelLoader.loadLevel ("Levels/level001");
@@ -21,5 +50,6 @@ public class GameManager : MonoBehaviour {
 
 		spawner.addEnemies (thisLevel.events);
 		spawner.shouldSpawn = true;
+		scenery.isMoving = true;
 	}
 }

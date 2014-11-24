@@ -4,11 +4,27 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour {
-		
+
+	public GameManager gameManager;
 	public bool shouldSpawn = false;
+
 	float currentTime = 0;
 
 	Stack<LevelData.LevelEvent> enemyEvents;
+	bool allFinished = false;
+
+	public void Reset()
+	{
+		//Delete all spawned child objects
+		var children = new List<GameObject>();
+		foreach (Transform child in transform) children.Add(child.gameObject);
+		children.ForEach(child => Destroy(child));
+
+		currentTime = 0;
+		shouldSpawn = false;
+		allFinished = false;
+	}
+
 
 	// Grab all loaded enemy events and add them to the list, 
 	// where they're sorted by the time at which they happen in the level
@@ -58,6 +74,14 @@ public class EnemySpawner : MonoBehaviour {
 
 				enemyEvents.Pop();
 			}
+		}
+
+		// check if all enemies have been spawned and killed
+		if(enemyEvents.Count == 0 && !allFinished && transform.childCount == 0)
+		{
+			allFinished = true;
+			Debug.Log("Level complete!");
+			gameManager.LevelComplete();
 		}
 	}
 	

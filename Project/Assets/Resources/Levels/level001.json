@@ -3,7 +3,7 @@
 	"scrollSpeed" : 100,
 	"events" : [
 		{
-			"time" : 3.1,
+			"time" : 3.0,
 			"type" : "enemy",
 			"prefabName" : "Enemy",
 			"yCoord" : 100
@@ -15,16 +15,70 @@
 			"yCoord" : 0
 		},		
 		{
-			"time" : 3.2,
+			"time" : 3.5,
 			"type" : "enemy",
 			"prefabName" : "Enemy",
 			"yCoord" : 0
 		},
 		{
-			"time" : 3.3,
+			"time" : 4.0,
 			"type" : "enemy",
 			"prefabName" : "Enemy",
 			"yCoord" : -100
-		}
+		},
+		{
+			"time" : 8.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 8.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		},
+		{
+			"time" : 8.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},
+		{
+			"time" : 10.8,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 12,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 12.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		},
+		{
+			"time" : 12.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},
+		{
+			"time" : 16,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		},
+		{
+			"time" : 16,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},
 	]
 }
