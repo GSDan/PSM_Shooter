@@ -9,7 +9,44 @@ public class GameManager : MonoBehaviour {
 	public SceneryManager scenery;
 	public PlayerController player;
 
+	public GameObject pauseMenu;
+
 	int score = 0;
+
+	public enum GameState{Playing, Paused, GameOver};
+
+	public GameState currentState;
+
+	void Start()
+	{
+		LevelData thisLevel = LevelLoader.loadLevel ("Levels/level001");
+		Debug.Log ("Successfully loaded level: " + thisLevel.title);
+		
+		spawner.addEnemies (thisLevel.events);
+		spawner.shouldSpawn = true;
+		scenery.isMoving = true;
+		currentState = GameState.Playing;
+	}
+
+	public void PauseControl()
+	{
+		if(currentState == GameState.Playing)
+		{
+			// Do pause
+			currentState = GameState.Paused;
+			spawner.shouldSpawn = false;
+			scenery.isMoving = false;
+			pauseMenu.SetActive(true);
+		}
+		else if(currentState == GameState.Paused)
+		{
+			// Do unpause
+			currentState = GameState.Playing;
+			spawner.shouldSpawn = true;
+			scenery.isMoving = true;
+			pauseMenu.SetActive(false);
+		}
+	}
 
 	public void AddPoints(int points)
 	{
@@ -19,6 +56,7 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver()
 	{
+		currentState = GameState.GameOver;
 		scenery.isMoving = false;
 		spawner.shouldSpawn = false;
 		sceneManager.showGameOver ();
@@ -32,24 +70,35 @@ public class GameManager : MonoBehaviour {
 
 	public void Restart()
 	{
+		DestroyShots ();
+
 		score = 0;
 		scoreLabel.text = "0";
 
 		spawner.Reset ();
 		player.Reset ();
 
-		sceneManager.showGameplay ();
+		// If the gameover screen is currently showing, hide it
+		if(currentState == GameState.GameOver)
+		{
+			sceneManager.showGameplay ();
+		}
+		else if(currentState == GameState.Paused)
+		{
+			PauseControl();
+		}
 
 		this.Start ();
 	}
 
-	void Start()
+	void DestroyShots()
 	{
-		LevelData thisLevel = LevelLoader.loadLevel ("Levels/level001");
-		Debug.Log ("Successfully loaded level: " + thisLevel.title);
+		Shot[] shots = GetComponentsInChildren<Shot> ();
 
-		spawner.addEnemies (thisLevel.events);
-		spawner.shouldSpawn = true;
-		scenery.isMoving = true;
+		foreach(Shot s in shots)
+		{
+			GameObject.Destroy(s.gameObject);
+		}
 	}
+
 }

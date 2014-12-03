@@ -19,8 +19,11 @@ public class RepeatingSprite : MonoBehaviour {
 	}
 
 	// Transport this background sprite to tile after the one following it once it is off camera
-	void OnTriggerEnter()
+	void OnTriggerEnter(Collider other)
 	{
-		transform.localPosition = partnerPosition.localPosition + new Vector3 (thisSprite.width - 1, 0, 0);
+		if(other.gameObject.tag == "Respawn")
+		{
+			transform.localPosition = partnerPosition.localPosition + new Vector3 (thisSprite.width - 1, 0, 0);
+		}
 	}
 }

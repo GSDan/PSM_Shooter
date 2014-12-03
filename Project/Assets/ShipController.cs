@@ -17,6 +17,8 @@ public abstract class ShipController : MonoBehaviour {
 
 	public GameObject shotPrefab;
 
+	public static GameManager gameManager;
+
 	public float getHealthPercent()
 	{
 		return currentHealth / maxHealth;
@@ -25,12 +27,17 @@ public abstract class ShipController : MonoBehaviour {
 	protected virtual void Start () 
 	{
 		currentHealth = maxHealth;
+
+		if(gameManager == null)
+		{
+			gameManager = GameObject.FindGameObjectWithTag ("GameRoot").GetComponent<GameManager> ();
+		}
 	}
 
 	protected virtual Shot shoot()
 	{
 		GameObject thisShot = (GameObject) Instantiate(shotPrefab, transform.position, transform.rotation);
-		thisShot.transform.parent = GameObject.FindGameObjectWithTag ("GameRoot").transform;
+		thisShot.transform.parent = gameManager.transform;
 		thisShot.transform.localScale = Vector3.one;
 		timeSincelastShot = 0;
 		return thisShot.GetComponent<Shot> ();
@@ -46,6 +53,11 @@ public abstract class ShipController : MonoBehaviour {
 	// Update is called once per frame
 	protected virtual void Update ()
 	{
+		if(gameManager.currentState != GameManager.GameState.Playing)
+		{
+			return;
+		}
+
 		if(currentHealth <= 0)
 		{
 			GameObject.Destroy(gameObject);
@@ -57,7 +69,7 @@ public abstract class ShipController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision other)
+	void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "Shot")
 		{

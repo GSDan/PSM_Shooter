@@ -41,6 +41,7 @@ public class EnemySpawner : MonoBehaviour {
 			}
 		}
 
+		// Sort using the LevelEvent class's IComparable
 		sortedEvents.Sort ();
 
 		// Use a stack so they can be easily traversed and removed
@@ -61,10 +62,12 @@ public class EnemySpawner : MonoBehaviour {
 
 			if(enemyEvent.time > currentTime)
 			{
+				// The stack is sorted by spawn time, so no point continuing deeper
 				break;
 			}
 			else
 			{
+				// This enemy is due to be spawned - create using the given prefab name and attach as a child of this object
 
 				GameObject prefab = (GameObject) Resources.Load("Prefabs/" + enemyEvent.prefab);
 				GameObject enemy = (GameObject) Instantiate(prefab, transform.position, transform.rotation);

@@ -25,6 +25,7 @@ public class LevelLoader : MonoBehaviour {
 
 		JSONArray events = json ["events"].AsArray;
 
+		// Loop over all of the found events and create LevelEvent objects from them
 		for(int i = 0; i < events.Count; i++)
 		{
 			thisLevel.addEvent(
@@ -77,9 +78,9 @@ public class LevelData
 			this.yCoord = yCoord;
 		}
 
+		// For sorting by spawn time (Ascending)
 		public int CompareTo(LevelEvent rhs)
 		{
-			//if(rhs == null) return 1;
 			if(time == rhs.time) return 0;
 			if(time > rhs.time) return -1;
 			else return 1;

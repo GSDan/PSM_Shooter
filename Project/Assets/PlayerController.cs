@@ -3,8 +3,6 @@ using System.Collections;
 
 public class PlayerController : ShipController {
 
-	public GameManager gameManager;
-
 	private bool isAlive = true;
 	private Vector3 originalPos;
 
@@ -26,7 +24,11 @@ public class PlayerController : ShipController {
 	// Update is called once per frame
 	protected override void Update ()
 	{
-		if(currentHealth <= 0)
+		if(gameManager.currentState != GameManager.GameState.Playing)
+		{
+			return;
+		}
+		else if(currentHealth <= 0)
 		{
 			if(isAlive)
 			{
@@ -38,6 +40,12 @@ public class PlayerController : ShipController {
 		else
 		{
 			base.Update ();
+		}
+
+		//Check for start button being pressed
+		if(Input.GetButtonDown("Start") || Input.GetKeyDown(KeyCode.Escape))
+		{
+			gameManager.PauseControl();
 		}
 
 		// Ship movement up

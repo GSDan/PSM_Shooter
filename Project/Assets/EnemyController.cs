@@ -9,6 +9,11 @@ public class EnemyController : ShipController {
 	// Update is called once per frame
 	protected override void Update ()
 	{
+		if(gameManager.currentState != GameManager.GameState.Playing)
+		{
+			return;
+		}
+
 		base.Update ();
 
 		timeToLive -= Time.deltaTime;
