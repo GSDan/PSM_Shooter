@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DataManager.cs" />
      <Compile Include="Assets\EnemyController.cs" />
      <Compile Include="Assets\EnemySpawner.cs" />
      <Compile Include="Assets\Examples\PSM\Input\Scripts\ButtonInput.cs" />

@@ -4,21 +4,27 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	public UILabel scoreLabel;
+
+	public UILabel finalScoreLabel;
+	public UILabel highScoreLabel;
+
 	public EnemySpawner spawner;
 	public SceneManager sceneManager;
 	public SceneryManager scenery;
 	public PlayerController player;
-
 	public GameObject pauseMenu;
+
+	public enum GameState{Playing, Paused, GameOver};
+	public GameState currentState;
+
+	DataManager dataManager;
 
 	int score = 0;
 
-	public enum GameState{Playing, Paused, GameOver};
-
-	public GameState currentState;
-
 	void Start()
 	{
+		dataManager = GameObject.Find ("Persistent").GetComponent<DataManager>();
+
 		LevelData thisLevel = LevelLoader.loadLevel ("Levels/level001");
 		Debug.Log ("Successfully loaded level: " + thisLevel.title);
 		
@@ -56,6 +62,20 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver()
 	{
+		bool newHigh = dataManager.data.EnterScoreIfGreater (1, score);
+		dataManager.Save ();
+
+		if(newHigh)
+		{
+			highScoreLabel.text = "NEW HIGH SCORE!";
+		}
+		else
+		{
+			highScoreLabel.text = "HIGHSCORE: " + dataManager.data.levelScores[1].ToString();
+		}
+
+		finalScoreLabel.text = "SCORE: " + scoreLabel.text;
+
 		currentState = GameState.GameOver;
 		scenery.isMoving = false;
 		spawner.shouldSpawn = false;
