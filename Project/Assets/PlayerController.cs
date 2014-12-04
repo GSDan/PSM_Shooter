@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : ShipController {
 
-	private bool isAlive = true;
+	public bool isAlive = true;
 	private Vector3 originalPos;
 
 	public enum PlayerMode {Flight, Ground};
@@ -105,8 +105,9 @@ public class PlayerController : ShipController {
 		{
 			if(isAlive)
 			{
-				gameManager.GameOver();
 				isAlive = false;
+				Debug.Log("Life lost!");
+				gameManager.LoseLife();
 			}
 			return;
 		}

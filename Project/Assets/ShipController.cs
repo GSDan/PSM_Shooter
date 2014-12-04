@@ -93,6 +93,7 @@ public abstract class ShipController : MonoBehaviour {
 	public virtual void Heal(int amount)
 	{
 		currentHealth = Mathf.Min (maxHealth, currentHealth + amount);
+		Debug.Log ("healed to " + currentHealth);
 	}
 
 }

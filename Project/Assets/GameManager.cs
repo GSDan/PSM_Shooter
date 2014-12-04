@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour {
 
 	public UILabel scoreLabel;
 
+	public UILabel livesLabel;
+
 	public UILabel finalScoreLabel;
 	public UILabel highScoreLabel;
 
@@ -19,7 +21,9 @@ public class GameManager : MonoBehaviour {
 
 	DataManager dataManager;
 
-	public int lives = 3;
+	public int startLives = 3;
+
+	int lives;
 	int currentLevel = 0;
 	int score = 0;
 
@@ -28,6 +32,9 @@ public class GameManager : MonoBehaviour {
 		dataManager = GameObject.Find ("Persistent").GetComponent<DataManager>();
 
 		dataManager.LoadLevelList ();
+
+		lives = startLives;
+		livesLabel.text = lives.ToString();
 
 		LevelSetup ();
 	}
@@ -77,6 +84,12 @@ public class GameManager : MonoBehaviour {
 		{
 			GameOver();
 		}
+		else
+		{
+			player.Heal((int)player.maxHealth);
+			livesLabel.text = lives.ToString();
+			player.isAlive = true;
+		}
 	}
 
 	public void GameOver()
@@ -125,6 +138,11 @@ public class GameManager : MonoBehaviour {
 		score = 0;
 		currentLevel = 0;
 		scoreLabel.text = "0";
+
+		lives = startLives;
+		livesLabel.text = lives.ToString();
+
+		player.isAlive = true;
 
 		spawner.Reset ();
 		player.Reset ();

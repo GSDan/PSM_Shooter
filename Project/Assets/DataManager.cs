@@ -84,7 +84,6 @@ public class DataManager : MonoBehaviour {
 
 		for(int i = 0; i < levelList.Count; i++)
 		{
-			Debug.Log("Adding level " + levelList[i]);
 			levelLocs.Add(levelList[i]);
 		}
 	}
