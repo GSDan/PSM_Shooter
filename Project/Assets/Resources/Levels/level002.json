@@ -1,0 +1,115 @@
+{
+	"title" : "The dark middle chapter",
+	"scrollSpeed" : 100,
+	"events" : [
+		{
+			"time" : 1.0,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 1.3,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 50
+		},		
+		{
+			"time" : 1.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},	
+		{
+			"time" : 1.3,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -50
+		},		
+		{
+			"time" : 1.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		},			
+		{
+			"time" : 5.0,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},
+		{
+			"time" : 5.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 75
+		},
+		{
+			"time" : 6.0,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		},
+		{
+			"time" : 10.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 10.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		},
+		{
+			"time" : 10.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},
+		{
+			"time" : 12.8,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 14,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 17.0,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 0
+		},
+		{
+			"time" : 17.3,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 50
+		},		
+		{
+			"time" : 17.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : 100
+		},	
+		{
+			"time" : 17.3,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -50
+		},		
+		{
+			"time" : 17.5,
+			"type" : "enemy",
+			"prefabName" : "Enemy",
+			"yCoord" : -100
+		},			
+		
+	]
+}

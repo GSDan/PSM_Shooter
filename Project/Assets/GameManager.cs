@@ -19,13 +19,22 @@ public class GameManager : MonoBehaviour {
 
 	DataManager dataManager;
 
+	public int lives = 3;
+	int currentLevel = 0;
 	int score = 0;
 
 	void Start()
 	{
 		dataManager = GameObject.Find ("Persistent").GetComponent<DataManager>();
 
-		LevelData thisLevel = LevelLoader.loadLevel ("Levels/level001");
+		dataManager.LoadLevelList ();
+
+		LevelSetup ();
+	}
+
+	void LevelSetup()
+	{
+		LevelData thisLevel = LevelLoader.loadLevel (dataManager.levelLocs[currentLevel]);
 		Debug.Log ("Successfully loaded level: " + thisLevel.title);
 		
 		spawner.addEnemies (thisLevel.events);
@@ -60,9 +69,19 @@ public class GameManager : MonoBehaviour {
 		scoreLabel.text = score.ToString ();
 	}
 
+	public void LoseLife()
+	{
+		lives--;
+
+		if(lives < 0)
+		{
+			GameOver();
+		}
+	}
+
 	public void GameOver()
 	{
-		bool newHigh = dataManager.data.EnterScoreIfGreater (1, score);
+		bool newHigh = dataManager.data.EnterScoreIfGreater (currentLevel, score);
 		dataManager.Save ();
 
 		if(newHigh)
@@ -71,7 +90,7 @@ public class GameManager : MonoBehaviour {
 		}
 		else
 		{
-			highScoreLabel.text = "HIGHSCORE: " + dataManager.data.levelScores[1].ToString();
+			highScoreLabel.text = "HIGHSCORE: " + dataManager.data.levelScores[currentLevel].ToString();
 		}
 
 		finalScoreLabel.text = "SCORE: " + scoreLabel.text;
@@ -85,7 +104,18 @@ public class GameManager : MonoBehaviour {
 	public void LevelComplete()
 	{
 		spawner.Reset ();
-		this.Start (); // TODO load next level
+
+		if(currentLevel < dataManager.levelLocs.Count - 1)
+		{
+			currentLevel++;
+		}
+		else
+		{
+			Debug.Log("run out of levels! Restarting from 0");
+			currentLevel = 0;
+		}
+
+		LevelSetup();
 	}
 
 	public void Restart()
@@ -93,6 +123,7 @@ public class GameManager : MonoBehaviour {
 		DestroyShots ();
 
 		score = 0;
+		currentLevel = 0;
 		scoreLabel.text = "0";
 
 		spawner.Reset ();
@@ -108,7 +139,7 @@ public class GameManager : MonoBehaviour {
 			PauseControl();
 		}
 
-		this.Start ();
+		LevelSetup();
 	}
 
 	void DestroyShots()

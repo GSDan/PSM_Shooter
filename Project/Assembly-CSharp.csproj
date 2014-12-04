@@ -197,6 +197,7 @@
      <Compile Include="Assets\SceneryManager.cs" />
      <Compile Include="Assets\ShipController.cs" />
      <Compile Include="Assets\Shot.cs" />
+     <Compile Include="Assets\Staminabar.cs" />
      <Compile Include="Assets\_Code\ABundlesExample.cs" />
      <None Include="Assets\NGUI\examples\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.7.1.txt" />

@@ -19,6 +19,8 @@ public abstract class ShipController : MonoBehaviour {
 
 	public static GameManager gameManager;
 
+	protected UISprite sprite;
+
 	public float getHealthPercent()
 	{
 		return currentHealth / maxHealth;
@@ -27,6 +29,8 @@ public abstract class ShipController : MonoBehaviour {
 	protected virtual void Start () 
 	{
 		currentHealth = maxHealth;
+
+		sprite = gameObject.GetComponent<UISprite> ();
 
 		if(gameManager == null)
 		{

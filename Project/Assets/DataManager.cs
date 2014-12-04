@@ -4,14 +4,16 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
+using SimpleJSON;
 
 public class DataManager : MonoBehaviour {
 
 	public static DataManager manager;
 	public GameData data;
+	public List<string> levelLocs;
 
 	private bool attemptedLoad = false;
-	private static string saveLoc = Application.persistentDataPath + "/playerSave.dat";
+	private static string saveLoc;
 
 	void Awake () {
 		if(manager == null)
@@ -19,6 +21,7 @@ public class DataManager : MonoBehaviour {
 			// make this the persistent data manager (works across scenes)
 			DontDestroyOnLoad(gameObject);
 			manager = this;
+			saveLoc = Application.persistentDataPath + "/playerSave.dat";
 
 			if(!attemptedLoad)
 			{
@@ -59,6 +62,30 @@ public class DataManager : MonoBehaviour {
 		else
 		{
 			Save ();
+		}
+	}
+
+	// Clear any existing level locations and load them anew
+	public void LoadLevelList()
+	{
+		levelLocs.Clear ();
+
+		// load the json file and then parse with the JSON library
+		TextAsset textData = Resources.Load ("Levels/_Data") as TextAsset;
+		var json = JSONNode.Parse (textData.text);
+		
+		if (json == null)
+		{
+			Debug.LogError("Failed to load json at " + "Levels/_Data");
+			return;
+		}
+
+		JSONArray levelList = json ["levels"].AsArray;
+
+		for(int i = 0; i < levelList.Count; i++)
+		{
+			Debug.Log("Adding level " + levelList[i]);
+			levelLocs.Add(levelList[i]);
 		}
 	}
 

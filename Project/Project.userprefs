@@ -1,10 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PlayerController.cs">
     <Files>
-      <File FileName="Assets\GameManager.cs" Line="63" Column="24" />
-      <File FileName="Assets\DataManager.cs" Line="34" Column="3" />
+      <File FileName="Assets\DataManager.cs" Line="22" Column="34" />
+      <File FileName="Assets\GameManager.cs" Line="35" Column="19" />
       <File FileName="Assets\SceneManager.cs" Line="55" Column="2" />
+      <File FileName="Assets\LevelLoader.cs" Line="26" Column="3" />
+      <File FileName="Assets\PlayerController.cs" Line="38" Column="34" />
+      <File FileName="Assets\ShipController.cs" Line="27" Column="3" />
+      <File FileName="Assets\HealthBar.cs" Line="12" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
