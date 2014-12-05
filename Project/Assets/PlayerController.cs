@@ -12,6 +12,8 @@ public class PlayerController : ShipController {
 	public float streetlevel = -137;
 	public float ceilingLevel = 161;
 
+	public Transform engineFlames;
+
 	public float takeOffTargetY = -50;
 	public float takeOffSpeed = 50;
 	public float jumpPower = 10;
@@ -89,9 +91,22 @@ public class PlayerController : ShipController {
 			newPos.y += takeOffSpeed * Time.deltaTime;
 
 			transform.localPosition = newPos;
+			SetSpritesUp();
 			yield return null;
 		}
 		inTakeOff = false;
+	}
+
+	void SetSpritesUp()
+	{
+		sprite.spriteName = "shipUp";
+		engineFlames.localPosition = new Vector3 (-44.7f, -1, 0);
+	}
+
+	void SetSpritesForward()
+	{
+		sprite.spriteName = "shipNormal";
+		engineFlames.localPosition = new Vector3 (-48.9f, -3.8f, 0);
 	}
 
 	// Update is called once per frame
@@ -114,6 +129,11 @@ public class PlayerController : ShipController {
 		else
 		{
 			base.Update ();
+		}
+
+		if(currentMode == PlayerMode.Flight)
+		{
+			SetSpritesForward();
 		}
 
 		if(currentJumpStamina < maxJumpStamina)
@@ -147,14 +167,23 @@ public class PlayerController : ShipController {
 
 		if((Input.GetKey(KeyCode.Mouse0) || Input.GetAxis("Right Stick Horizontal") != 0) && timeSincelastShot >= shotCooldown)
 		{
-			if(Input.GetAxis("Right Stick Horizontal") > 0)
+			if(currentMode == PlayerMode.Ground)
 			{
-				shoot(new Vector2(shotVelocity, Input.GetAxis ("Right Stick Vertical") * -2));
+				if(Input.GetAxis("Right Stick Horizontal") > 0)
+				{
+					shoot(new Vector2(shotVelocity, Input.GetAxis ("Right Stick Vertical") * -1));
+				}
+				else
+				{
+					shoot(new Vector2(-shotVelocity, Input.GetAxis ("Right Stick Vertical") * -1));
+				}
 			}
 			else
 			{
-				shoot(new Vector2(-shotVelocity, Input.GetAxis ("Right Stick Vertical") * -2));
+				// Flight mode only shoots forward + straight
+				shoot(new Vector2(shotVelocity, 0));
 			}
+
 		}
 
 		// Hard lock to the ground as a base minimum height
@@ -163,7 +192,10 @@ public class PlayerController : ShipController {
 			Vector3 newPos = transform.localPosition;
 			newPos.y = streetlevel;
 			transform.localPosition = newPos;
-			rigidbody.velocity = Vector3.zero;
+			if(!rigidbody.isKinematic)
+			{
+				rigidbody.velocity = Vector3.zero;
+			}
 		}
 
 		// Hard lock to the ceiling as a base max height
@@ -172,7 +204,10 @@ public class PlayerController : ShipController {
 			Vector3 newPos = transform.localPosition;
 			newPos.y = ceilingLevel;
 			transform.localPosition = newPos;
-			rigidbody.velocity = Vector3.zero;
+			if(!rigidbody.isKinematic)
+			{
+				rigidbody.velocity = Vector3.zero;
+			}
 		}
 
 		if((Input.GetButton("Cross") || Input.GetKey(KeyCode.Space)) && currentMode == PlayerMode.Ground  && transform.localPosition.y < ceilingLevel && currentJumpStamina > maxJumpStamina/20)
@@ -188,6 +223,7 @@ public class PlayerController : ShipController {
 		if((Input.GetButton("Dup") || Input.GetAxis("Left Stick Vertical") < 0 || Input.GetKey(KeyCode.W)) && (transform.localPosition.y < ceilingLevel))
 		{
 			transform.localPosition += new Vector3(0, shipSpeed.y * Time.deltaTime, 0);
+			SetSpritesUp();
 		}
 		// ship movement down
 		else if((Input.GetButton("Ddown") || Input.GetAxis("Left Stick Vertical") > 0 || Input.GetKey(KeyCode.S)) && (transform.localPosition.y > -120))
@@ -201,6 +237,12 @@ public class PlayerController : ShipController {
 		Shot thisShot = base.shoot (direction);
 
 		thisShot.shotByPlayer = true;
+
+		if(currentMode == PlayerMode.Flight)
+		{
+			thisShot.transform.localPosition = transform.localPosition + new Vector3(22, -16, 0);
+		}
+
 		return thisShot;
 	}
 
