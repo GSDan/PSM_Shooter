@@ -58,7 +58,7 @@ public class PlayerController : ShipController {
 			rigidbody.useGravity = false;
 			rigidbody.isKinematic = true;
 			StartCoroutine(TakeFlight());
-			sprite.spriteName = "ship";
+			sprite.spriteName = "shipNormal";
 			return;
 		}
 
