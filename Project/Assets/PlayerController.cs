@@ -103,6 +103,12 @@ public class PlayerController : ShipController {
 		engineFlames.localPosition = new Vector3 (-44.7f, -1, 0);
 	}
 
+	void SetSpritesDown()
+	{
+		sprite.spriteName = "shipDown";
+		engineFlames.localPosition = new Vector3 (-44.48f, -0.5f, 0);
+	}
+
 	void SetSpritesForward()
 	{
 		sprite.spriteName = "shipNormal";
@@ -229,6 +235,7 @@ public class PlayerController : ShipController {
 		else if((Input.GetButton("Ddown") || Input.GetAxis("Left Stick Vertical") > 0 || Input.GetKey(KeyCode.S)) && (transform.localPosition.y > -120))
 		{
 			transform.localPosition += new Vector3(0, -shipSpeed.y * Time.deltaTime, 0);
+			SetSpritesDown();
 		}
 	}
 
