@@ -21,6 +21,8 @@ public class PlayerController : ShipController {
 	private float currentJumpStamina;
 	private bool inTakeOff = false;
 
+	public UISpriteAnimation transformAni;
+
 	// Use this for initialization
 	protected override void Start ()
 	{
@@ -60,7 +62,9 @@ public class PlayerController : ShipController {
 			rigidbody.useGravity = false;
 			rigidbody.isKinematic = true;
 			StartCoroutine(TakeFlight());
-			sprite.spriteName = "shipNormal";
+			sprite.enabled = false;
+			transformAni.gameObject.SetActive(true);
+			transformAni.Play();
 			return;
 		}
 
@@ -69,7 +73,9 @@ public class PlayerController : ShipController {
 			inTakeOff = false;
 			rigidbody.useGravity = true;
 			rigidbody.isKinematic = false;
-			sprite.spriteName = "Mario_Sprite";
+			sprite.enabled = false;
+			transformAni.gameObject.SetActive(true);
+			transformAni.Play();
 			return;
 		}
 	}
