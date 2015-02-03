@@ -199,7 +199,6 @@
      <Compile Include="Assets\Shot.cs" />
      <Compile Include="Assets\Staminabar.cs" />
      <Compile Include="Assets\_Code\ABundlesExample.cs" />
-     <Compile Include="Assets\sarahScript.cs" />
      <None Include="Assets\NGUI\examples\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.7.1.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />

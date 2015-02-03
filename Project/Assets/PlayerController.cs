@@ -13,6 +13,7 @@ public class PlayerController : ShipController {
 	public float ceilingLevel = 161;
 
 	public Transform engineFlames;
+	public Transform tranEngines;
 
 	public float takeOffTargetY = -50;
 	public float takeOffSpeed = 50;
@@ -20,6 +21,7 @@ public class PlayerController : ShipController {
 	public float maxJumpStamina = 1;
 	private float currentJumpStamina;
 	private bool inTakeOff = false;
+	private bool boostAnimActive = false;
 
 	public UISpriteAnimation transformAni;
 
@@ -64,7 +66,10 @@ public class PlayerController : ShipController {
 			StartCoroutine(TakeFlight());
 			sprite.enabled = false;
 			transformAni.gameObject.SetActive(true);
-			transformAni.Play();
+			transformAni.shouldReverse = true;
+			transformAni.ResetToBeginning();
+			transformAni.Play(AnimationCallback);
+			tranEngines.gameObject.SetActive(false);
 			return;
 		}
 
@@ -75,7 +80,32 @@ public class PlayerController : ShipController {
 			rigidbody.isKinematic = false;
 			sprite.enabled = false;
 			transformAni.gameObject.SetActive(true);
-			transformAni.Play();
+			transformAni.shouldReverse = false;
+			transformAni.ResetToBeginning();
+			transformAni.Play(AnimationCallback);
+			engineFlames.gameObject.SetActive(false);
+			return;
+		}
+	}
+
+	protected void AnimationCallback()
+	{
+		sprite.enabled = true;
+		transformAni.gameObject.SetActive (false);
+
+		if (currentMode == PlayerMode.Flight)
+		{
+			sprite.spriteName = "shipNormal";
+			sprite.SetDimensions(90, 46);
+			engineFlames.gameObject.SetActive(true);
+			return;
+		}
+		
+		if (currentMode == PlayerMode.Ground)
+		{
+			tranEngines.gameObject.SetActive(true);
+			sprite.spriteName = "tran011";
+			sprite.SetDimensions(90, 77);
 			return;
 		}
 	}
@@ -119,6 +149,23 @@ public class PlayerController : ShipController {
 	{
 		sprite.spriteName = "shipNormal";
 		engineFlames.localPosition = new Vector3 (-48.9f, -3.8f, 0);
+	}
+
+	void SetEnginesToBoost(bool targetState)
+	{
+		if(boostAnimActive != targetState)
+		{
+			boostAnimActive = targetState;
+
+			if(targetState) tranEngines.GetComponent<UISprite>().SetDimensions(45,40);
+			else tranEngines.GetComponent<UISprite>().SetDimensions(45,15);
+
+			UISpriteAnimation engine = tranEngines.GetComponent<UISpriteAnimation>();
+			engine.namePrefix = (targetState)? "altBoost" : "altEngines"; 
+			engine.RebuildSpriteList();
+			engine.Play();
+			Debug.Log(engine.namePrefix);
+		}
 	}
 
 	// Update is called once per frame
@@ -222,11 +269,22 @@ public class PlayerController : ShipController {
 			}
 		}
 
-		if((Input.GetButton("Cross") || Input.GetKey(KeyCode.Space)) && currentMode == PlayerMode.Ground  && transform.localPosition.y < ceilingLevel && currentJumpStamina > maxJumpStamina/20)
+		if((Input.GetButton("Cross") || Input.GetKey(KeyCode.Space)) && currentMode == PlayerMode.Ground  && transform.localPosition.y < ceilingLevel)
 		{
-			Debug.Log(rigidbody.velocity.ToString());
-			currentJumpStamina -= Time.deltaTime;
-			rigidbody.AddForce(Vector3.up * jumpPower);
+			if(currentJumpStamina > maxJumpStamina/20)
+			{
+				Debug.Log(rigidbody.velocity.ToString());
+				currentJumpStamina -= Time.deltaTime;
+				rigidbody.AddForce(Vector3.up * jumpPower);
+				SetEnginesToBoost(true);
+			}
+			else
+			{
+				SetEnginesToBoost(false);
+			}
+		}else
+		{
+			SetEnginesToBoost(false);
 		}
 
 		if(inTakeOff || currentMode == PlayerMode.Ground) return; // Player has no direct control over vertical movement during takeoff or ground mode

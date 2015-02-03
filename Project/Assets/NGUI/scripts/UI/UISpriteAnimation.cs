@@ -6,6 +6,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+
+public delegate void AnimationDelegate ();
+
 /// <summary>
 /// Very simple sprite animation. Attach to a sprite and specify a common prefix such as "idle" and it will cycle through them.
 /// </summary>
@@ -20,12 +23,13 @@ public class UISpriteAnimation : MonoBehaviour
 	[HideInInspector][SerializeField] protected bool mLoop = true;
 	[HideInInspector][SerializeField] protected bool mSnap = true;
 
+	public bool shouldReverse = false;
 	protected UISprite mSprite;
 	protected float mDelta = 0f;
 	protected int mIndex = 0;
 	protected bool mActive = true;
 	protected List<string> mSpriteNames = new List<string>();
-
+	protected AnimationDelegate callback;
 	/// <summary>
 	/// Number of frames in the animation.
 	/// </summary>
@@ -60,7 +64,7 @@ public class UISpriteAnimation : MonoBehaviour
 	/// Rebuild the sprite list first thing.
 	/// </summary>
 
-	protected virtual void Start () { RebuildSpriteList(); }
+	protected virtual void Start () { RebuildSpriteList();}
 
 	/// <summary>
 	/// Advance the sprite animation process.
@@ -73,21 +77,42 @@ public class UISpriteAnimation : MonoBehaviour
 			mDelta += RealTime.deltaTime;
 			float rate = 1f / mFPS;
 
+
 			if (rate < mDelta)
 			{
 				
 				mDelta = (rate > 0f) ? mDelta - rate : 0f;
 
-				if (++mIndex >= mSpriteNames.Count)
+				if(shouldReverse)
 				{
-					mIndex = 0;
-					mActive = mLoop;
+					if (--mIndex <= 0)
+					{
+						mIndex = mSpriteNames.Count -1;
+						mActive = mLoop;
+					}
 				}
+				else
+				{
+					if (++mIndex >= mSpriteNames.Count)
+					{
+						mIndex = 0;
+						mActive = mLoop;
+					}
+				}
+
+				//Debug.Log(mSpriteNames[mIndex]);
 
 				if (mActive)
 				{
 					mSprite.spriteName = mSpriteNames[mIndex];
 					if (mSnap) mSprite.MakePixelPerfect();
+				}
+				else
+				{
+					if(callback != null)
+					{
+						callback();
+					}
 				}
 			}
 		}
@@ -123,7 +148,7 @@ public class UISpriteAnimation : MonoBehaviour
 	/// Reset the animation to the beginning.
 	/// </summary>
 
-	public void Play () { mActive = true; }
+	public void Play (AnimationDelegate callback = null) { mActive = true; this.callback = callback; }
 
 	/// <summary>
 	/// Pause the animation.
@@ -138,7 +163,7 @@ public class UISpriteAnimation : MonoBehaviour
 	public void ResetToBeginning ()
 	{
 		mActive = true;
-		mIndex = 0;
+		mIndex = (shouldReverse)? mSpriteNames.Count -1 : 0;
 
 		if (mSprite != null && mSpriteNames.Count > 0)
 		{
